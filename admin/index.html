@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Eden Festival - Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="/assets/img/eden-festival-logo.png" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/admin.css" />
+  </head>
+  <body class="admin">
+    <header class="admin__header">
+      <div class="admin__wrap">
+        <div>
+          <p class="admin__eyebrow">Internal use only</p>
+          <h1>The Eden Festival Schedule Admin</h1>
+          <p class="admin__lede">Update the festival schedule, export JSON for backups, and push changes to the public site instantly.</p>
+        </div>
+        <a class="btn btn--secondary" href="../index.html">&larr; Back to site</a>
+      </div>
+    </header>
+
+    <main class="admin__main">
+      <section class="admin__panel">
+        <h2>Add or edit an event</h2>
+        <form id="event-form" class="admin-form" novalidate>
+          <input type="hidden" id="event-id" name="id" />
+          <div class="admin-form__grid">
+            <label>
+              Day
+              <select id="event-day" name="day" required>
+                <option value="">Select day</option>
+                <option>Thursday</option>
+                <option>Friday</option>
+                <option>Saturday</option>
+                <option>Sunday</option>
+              </select>
+            </label>
+            <label class="time-input">
+              Start time
+              <input id="event-time" name="time" type="text" placeholder="7:30 PM" autocomplete="off" required />
+              <div class="time-menu" data-time-menu hidden></div>
+            </label>
+            <label>
+              Title
+              <input id="event-title" name="title" type="text" required />
+            </label>
+            <label>
+              Description
+              <textarea id="event-description" name="description" rows="3" required></textarea>
+            </label>
+            <label class="tag-input">
+              Tags <span class="admin__hint">Click a suggestion or type, separated by commas. New tags become shared for everyone.</span>
+              <input id="event-tags" name="tags" type="text" placeholder="Installation, Accessible" autocomplete="off" />
+              <div class="tag-menu" data-tag-menu hidden></div>
+              <div class="tag-prompt" id="tag-prompt" hidden>
+                <p class="tag-prompt__text" id="tag-prompt-text"></p>
+                <div class="tag-prompt__actions">
+                  <button type="button" class="tag-prompt__action tag-prompt__action--confirm" id="tag-prompt-add">Add tag</button>
+                  <button type="button" class="tag-prompt__action" id="tag-prompt-dismiss">Not now</button>
+                </div>
+              </div>
+            </label>
+          </div>
+          <div class="admin-form__actions">
+            <button class="btn btn--primary" type="submit">Save event</button>
+            <button class="btn btn--secondary" type="reset" id="reset-form">Clear form</button>
+          </div>
+          <p class="admin__hint">Saved events appear in the table below. Updates sync immediately to the public schedule and persist in this browser.</p>
+        </form>
+      </section>
+
+      <section class="admin__panel">
+        <div class="admin__panel-header">
+          <h2>Current schedule</h2>
+          <div class="admin__panel-actions">
+            <button class="btn btn--ghost" id="export-json" type="button">Export JSON</button>
+            <button class="btn btn--ghost" id="import-json" type="button">Import JSON</button>
+            <button class="btn btn--secondary" id="reset-defaults" type="button">Reset to defaults</button>
+          </div>
+          </div>
+        <div class="admin-table__wrap">
+          <table class="admin-table" aria-describedby="schedule-actions">
+            <thead>
+              <tr>
+                <th scope="col">Day</th>
+                <th scope="col">Time</th>
+                <th scope="col">Title</th>
+                <th scope="col">Tags</th>
+                <th scope="col" class="admin-table__actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="schedule-rows"></tbody>
+          </table>
+        </div>
+        <p id="schedule-actions" class="admin__hint">Use edit to load an event into the form above. Delete removes it from the public schedule.</p>
+      </section>
+
+      <section class="admin__panel">
+        <h2>Import / export</h2>
+        <p class="admin__hint">Copy the exported JSON to version control or paste JSON here to replace the current schedule.</p>
+        <textarea id="json-output" rows="8" spellcheck="false"></textarea>
+        <div class="admin-form__actions">
+          <button class="btn btn--primary" type="button" id="apply-json">Apply JSON</button>
+          <button class="btn btn--secondary" type="button" id="copy-json">Copy to clipboard</button>
+        </div>
+        <p class="admin__hint">Invalid JSON will be rejected. The schema requires: day, time, title, description, and tags (array of strings).</p>
+      </section>
+    </main>
+
+    <footer class="admin__footer">
+      <div class="admin__wrap">
+        <p>Changes are stored locally in this browser and reflected on the public schedule immediately.</p>
+        <button class="btn btn--ghost" type="button" id="download-json">Download backup</button>
+      </div>
+    </footer>
+
+    <script src="../assets/js/admin.js" type="module"></script>
+  </body>
+</html>
+
+
+
+
+
+
+
